@@ -1,0 +1,13 @@
+# Ignore vendor directory
+/backend/vendor
+
+# Ignore Composer's lock file
+/backend/composer.lock
+
+# Ignore any local configuration files IDE
+/.idea
+/.vscode
+
+# Ignore any local configuration files for your IDE or editor
+/.idea
+/.vscode

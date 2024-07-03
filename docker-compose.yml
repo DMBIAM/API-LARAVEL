@@ -1,0 +1,71 @@
+version: '3.1'
+services:
+  db:
+    container_name: local_db
+    image: mysql:5.7
+    command: 
+      - --default-authentication-plugin=mysql_native_password
+      - --innodb-buffer-pool-size=1G
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+    environment:
+      MYSQL_DATABASE: $BD_NAME
+      MYSQL_USER: $BD_PASSWORD_USER
+      MYSQL_PASSWORD: $BD_PASSWORD_ROOT
+      MYSQL_ROOT_PASSWORD: $BD_PASSWORD_ROOT 
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+      - local_db:/var/lib/mysql
+    ports:
+      - "$PORT_MYSQL:3306"
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: $RAM_MAX_DB
+        reservations:
+          cpus: '0.25'
+          memory: $RAM_MAX_DB
+  backend:
+    container_name: amazon_linux
+    depends_on:
+      - db
+    links: 
+          - db:db
+    volumes:
+      - $PATH_TO_REPO:/usr/share/nginx/html
+    image: amazon_linux
+    build: 
+      dockerfile: Dockerfile
+      args:
+        XDEBUG_VERSION: $XDEBUG_VERSION
+        DRUSH_VERSION: $DRUSH_VERSION
+        PHP_VERSION: $PHP_VERSION
+    privileged: true
+    ports:
+      - "$PORT_HTTP_HOST:80"
+      - "$PORT_HTTPS_HOST:443"
+    networks:
+      - default
+    dns: 
+      - "8.8.8.8"
+      - "1.1.1.1"
+    command: /usr/sbin/init && systemctl restart php-fpm.service && systemctl restart nginx.service && cd /usr/share/nginx/html 
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+      # extra host for environment DEV local
+
+    hostname: local
+    domainname: local
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: $RAM_MAX
+        reservations:
+          cpus: '0.25'
+          memory: $RAM_RES
+volumes:
+  local_db:
