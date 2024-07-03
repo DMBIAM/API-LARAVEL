@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Favorites;
 use App\Commands\CreateFavoriteCommand;
 use App\Commands\DeleteFavoriteCommand;
+use App\Commands\FavoriteSearchCommandHandler;
 use App\Commands\CommandInvoker;
 
 class FavoritesController extends Controller
@@ -14,18 +15,55 @@ class FavoritesController extends Controller
     /**
      * index
      *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $favorites = [];
+
+        if ($request->filled('employee') || $request->filled('company') || $request->filled('category'))
+        {
+            $favorites = $this->searchWithParams($request);     
+        } 
+        else 
+        {
+            $favorites = Favorites::with([
+                'employee', 
+                'employee.area', 
+                'employee.category', 
+                'employee.company', 
+                'employee.city'
+            ])->get();
+        }
+        return response()->json($favorites, 200);
+    }
+    
+    /**
+     * searchWithParams
+     *
+     * @param  Request $request
      * @return array
      */
-    public function index()
-    {
-        $employees = Favorites::with([
-            'employee', 
-            'employee.area', 
-            'employee.category', 
-            'employee.company', 
-            'employee.city'
-        ])->get();
-        return response()->json($employees);
+    public function searchWithParams($request){
+        try {
+
+            $params = [
+                'employee' => $request->input('employee'),
+                'company' => $request->input('company'),
+                'category' => $request->input('category'),
+            ];
+            
+            $command = new FavoriteSearchCommandHandler();
+            $favorites = $command->execute($params);
+    
+            return $favorites;
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => $th->getMessage(),
+            ], 500);
+        }
     }
     
     /**

@@ -27,7 +27,7 @@ class DeleteFavoriteCommand implements CommandInterface
      *
      * @return void
      */
-    public function execute()
+    public function execute(array $params = [])
     {
         $favorite = Favorites::findOrFail($this->favoriteId);
         $favorite->delete();

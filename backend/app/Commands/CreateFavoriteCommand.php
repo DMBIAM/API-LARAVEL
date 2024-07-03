@@ -32,7 +32,7 @@ class CreateFavoriteCommand implements CommandInterface
      *
      * @return void
      */
-    public function execute()
+    public function execute(array $params = [])
     {
         return Favorites::create($this->attributes);
     }
