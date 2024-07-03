@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorites;
-use Database\Factories\FavoritesFactory;
+use App\Commands\CreateFavoriteCommand;
+use App\Commands\CommandInvoker;
 
 class FavoritesController extends Controller
 {
@@ -34,19 +35,20 @@ class FavoritesController extends Controller
                 'employee' => 'required|exists:employees,id',
             ]);
     
-            $area = FavoritesFactory::new()->create([
-                'employee_id' => $request->input('employee')
+            $command = new CreateFavoriteCommand([
+                'employee_id' => $request->input('employee'),
             ]);
-
-            return response()->json($area, 201);
+    
+            $invoker = new CommandInvoker();
+            $invoker->setCommand($command);
+            $favorite = $invoker->executeCommand();
+    
+            return response()->json($favorite, 201);
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Validation error, please check the provided data',
+                'error' => $th->getMessage(),
             ], 422);
-        }
-        
-
-        
+        }                
     }
-
 }
