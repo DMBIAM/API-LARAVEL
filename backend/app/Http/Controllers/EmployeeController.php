@@ -5,10 +5,31 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Factories\ConcreteEmployeeFactory;
+use App\Models\Employee;
 
 
 class EmployeeController extends Controller
 {
+
+    /**
+     * Display a listing of the employees.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $limit = $request->query('limit', 5);
+        try {
+            $employees = Employee::with(['area', 'category', 'company', 'city'])->paginate($limit);
+            return response()->json($employees);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Error',
+            ], 500);
+        }
+        
+    }
    
     /**
      * Store a newly created employee in storage.
@@ -18,7 +39,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {        
-
         try {
             $factory = new ConcreteEmployeeFactory();
 

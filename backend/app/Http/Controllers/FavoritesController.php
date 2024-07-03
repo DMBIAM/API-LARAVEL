@@ -29,15 +29,24 @@ class FavoritesController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'employee' => 'required|exists:employees,id',
-        ]);
+        try {
+            $request->validate([
+                'employee' => 'required|exists:employees,id',
+            ]);
+    
+            $area = FavoritesFactory::new()->create([
+                'employee_id' => $request->input('employee')
+            ]);
 
-        $area = FavoritesFactory::new()->create([
-            'employee_id' => $request->input('employee')
-        ]);
+            return response()->json($area, 201);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Validation error, please check the provided data',
+            ], 422);
+        }
+        
 
-        return response()->json($area, 201);
+        
     }
 
 }
