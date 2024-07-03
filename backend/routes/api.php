@@ -98,3 +98,6 @@ Route::post($version. '/favorites', [FavoritesController::class, 'store']);
 
 // GET
 Route::get($version. '/favorites', [FavoritesController::class, 'index']);
+
+// DELETE
+Route::delete($version . '/favorites/{id}', [FavoritesController::class, 'destroy']);

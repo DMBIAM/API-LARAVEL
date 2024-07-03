@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Favorites;
 use App\Commands\CreateFavoriteCommand;
+use App\Commands\DeleteFavoriteCommand;
 use App\Commands\CommandInvoker;
 
 class FavoritesController extends Controller
@@ -13,13 +14,18 @@ class FavoritesController extends Controller
     /**
      * index
      *
-     * @return void
+     * @return array
      */
     public function index()
     {
-        $areas = Favorites::all();
-
-        return response()->json($areas);
+        $employees = Favorites::with([
+            'employee', 
+            'employee.area', 
+            'employee.category', 
+            'employee.company', 
+            'employee.city'
+        ])->get();
+        return response()->json($employees);
     }
     
     /**
@@ -47,8 +53,23 @@ class FavoritesController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'message' => 'Validation error, please check the provided data',
-                'error' => $th->getMessage(),
             ], 422);
         }                
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $command = new DeleteFavoriteCommand($id);
+            $invoker = new CommandInvoker();
+            $invoker->setCommand($command);
+            $invoker->executeCommand();
+            return response()->json(null, 204);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Validation error, please check the provided id',
+                'error' => $th->getMessage(),
+            ], 422);
+        }
     }
 }
