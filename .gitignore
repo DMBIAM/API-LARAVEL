@@ -11,3 +11,6 @@
 # Ignore any local configuration files for your IDE or editor
 /.idea
 /.vscode
+
+# Ignore node_module
+/frontend/node_modules
