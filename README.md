@@ -2,7 +2,9 @@
 El front está en IONIC y angular, utiliza en su gran mayoría componentes nativos para el render de los elementos
 
 ## Listar empleados
-Desde http://localhost:8100/home se podrá observar el listado de empleados, adicional se podrá indicar si es favorito o no utilizando el tooltip, si el empleado es favorito el tooltip estará seleccionado y en color azul
+Desde http://localhost:8100/home se podrá observar el listado de empleados, adicional se podrá indicar si es favorito o no utilizando el tooltip, si el empleado es favorito el tooltip estará seleccionado y en color azul.
+
+También se podrá ordenar los empleados por el satisfacción ascendente y descendente.
 
 ![Prueba Modal](https://github.com/DMBIAM/API-LARAVEL/blob/main/pic/employee-list.png)
 
