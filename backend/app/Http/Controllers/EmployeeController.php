@@ -21,7 +21,7 @@ class EmployeeController extends Controller
     {
         $limit = $request->query('limit', 5);
         try {
-            $employees = Employee::with(['area', 'category', 'company', 'city'])->paginate($limit);
+            $employees = Employee::with(['area', 'category', 'company', 'city', 'favorites'])->paginate($limit);
             return response()->json($employees);
         } catch (\Throwable $th) {
             return response()->json([

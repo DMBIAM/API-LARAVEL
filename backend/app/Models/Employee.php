@@ -60,4 +60,14 @@ class Employee extends Model
     {
         return $this->belongsTo(City::class);
     }
+    
+    /**
+     * favorites
+     *
+     * @return void
+     */
+    public function favorites()
+    {
+        return $this->hasOne(Favorites::class);
+    }
 }

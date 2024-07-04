@@ -4,8 +4,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  display: inline-flex;
 }
 
 #container strong {
@@ -25,3 +24,55 @@
 #container a {
   text-decoration: none;
 }
+
+ion-card.card-mini.md.hydrated {
+  max-width: 300px;
+  background: #ffff;
+}
+
+ion-footer {
+  background-color: #f8f8f8;
+}
+
+ion-toolbar {
+  border-top: 1px solid #ccc;
+}
+
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ion-card {
+  flex: 0 0 calc(25% - 20px);
+  margin: 10px;
+  max-width: calc(25% - 20px);
+}
+
+@media (max-width: 1200px) {
+  ion-card {
+      flex: 0 0 calc(33.33% - 20px);
+      max-width: calc(33.33% - 20px);
+  }
+}
+
+@media (max-width: 900px) {
+  ion-card {
+      flex: 0 0 calc(50% - 20px); /* Cuando el ancho de la pantalla es menor, muestra 2 ion-card por fila */
+      max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  ion-card {
+      flex: 0 0 calc(100% - 20px); /* Cuando el ancho de la pantalla es menor, muestra 1 ion-card por fila */
+      max-width: calc(100% - 20px);
+  }
+}
+
+
+ion-content.md.content-ltr.hydrated {
+  --offset-bottom: 0px !important;
+}
+
