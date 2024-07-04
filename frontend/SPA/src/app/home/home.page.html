@@ -1,6 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Empleados</ion-title>
+
+    <ion-title>Employees</ion-title>
+
+    <ion-button size="large" id="open-modal" expand="block" [disabled]="!showSegment">
+      Favorites modal
+      <ion-icon slot="end" name="heart"></ion-icon>
+    </ion-button>
+
     <ion-segment [(ngModel)]="order" (ionChange)="sortEmployees()" *ngIf="showSegment">
       <ion-segment-button value="desc" checked>Satisfacción Descendente</ion-segment-button>
       <ion-segment-button value="asc">Satisfacción Ascendente</ion-segment-button>
@@ -34,8 +41,12 @@
           <p><strong>City:</strong> {{ employee.city.name }}</p>
           <p><strong>Satisfaction:</strong> {{ employee.satisfaction }}</p>
         </ion-card-content>
-        <ion-toggle [checked]="employee.favorites !== null" (ionChange)="updateFavorite(employee, $event.detail.checked)">Favorite</ion-toggle><br /><br />
+        <ion-toggle [checked]="employee.favorites !== null"
+          (ionChange)="updateFavorite(employee, $event.detail.checked)">Favorite</ion-toggle><br /><br />
       </ion-card>
+    </div>
+    <div class="modal">
+      <app-modal></app-modal>
     </div>
   </div>
 </ion-content>

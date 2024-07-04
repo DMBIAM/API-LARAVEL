@@ -16,6 +16,8 @@ export class HomePage implements OnInit {
   showLoading: boolean = true;
   order: string = 'desc';
   showSegment: boolean = false;
+  canDismiss: boolean = false;
+  presentingElement = null;
 
   constructor(
     private employeeService: EmployeeService,
@@ -23,6 +25,7 @@ export class HomePage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    //this.presentingElement = document.querySelector('.ion-page');
     this.loadEmployees();
   }
 

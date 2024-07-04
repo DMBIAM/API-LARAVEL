@@ -1,15 +1,41 @@
-# Uso del Patrón Factory Method:
+# Frontend
+El front está en IONIC y angular, utiliza en su gran mayoría componentes nativos para el render de los elementos
+
+## Listar empleados
+Desde http://localhost:8100/home se podrá observar el listado de empleados, adicional se podrá indicar si es favorito o no utilizando el tooltip, si el empleado es favorito el tooltip estará seleccionado y en color azul
+
+![Prueba Modal](https://github.com/DMBIAM/API-LARAVEL/blob/main/pic/employee-list.png)
+
+## Mostrar modal y ver favoritos
+Desde el Home se observará un botón en el header que permite abrir el modal, este botón solo se habilita una vez se carga la información de los empleados.
+
+Desde el modal se podrá buscar empleados por nombre, compañía o categoría
+
+![Prueba Modal](https://github.com/DMBIAM/API-LARAVEL/blob/main/pic/modal-1.png)
+
+![Prueba Modal](https://github.com/DMBIAM/API-LARAVEL/blob/main/pic/modal-2.png)
+
+Desde el modal se podrá eliminar empleados marcados como favoritos, con solo darle clic al botón con icono de trash, una vez se da clic el botón asociado al empleado favorito se deshabilita mientras se realiza el proceso correspondiente para luego retirarse el empleado del listado observado
+
+![Prueba Modal Peticiones](https://github.com/DMBIAM/API-LARAVEL/blob/main/pic/modal-3.png)
+
+![Prueba Modal Peticiones](https://github.com/DMBIAM/API-LARAVEL/blob/main/pic/modal-4.png)
+
+
+
+# Backend 
+## Uso del Patrón Factory Method:
 
 Se crea una clase llamada backend\app\Factories\ConcreteEmployeeFactory.php que implementa la interfaz backend\app\Factories\EmployeeFactoryInterface.php, permitiendo la creación de objetos de tipo Employee de forma encapsulada desde cualquier punto, asegurando que la lógica de creación esté centralizada y pueda ser modificada o extendida en el futuro.
 
 Para el ejemplo la creación del objeto tipo Employee se realiza en backend\app\Http\Controllers\EmployeeController.php   
 
 
-# Uso del Patrón Command:
+## Uso del Patrón Command:
 
 Se utiliza en el controlador de favoritos backend\app\Http\Controllers\FavoritesController.php para crear (backend\app\Commands\CreateFavoriteCommand.php), eliminar (backend\app\Commands\DeleteFavoriteCommand.php) y buscar (backend\app\Commands\FavoriteSearchCommandHandler.php) favoritos. Para este se utiliza una única interfaz que se encarga de ejecutar el comando invocado 
 
-# Ejecución de prueba unitaria:
+## Ejecución de prueba unitaria:
 
 ## Creación de empleados
 Ruta: backend\tests\Unit\EmployeeTest.php
@@ -39,8 +65,10 @@ where employees.category_id = 3
 ```
 
 # Colección de postman
-Ruta: /postman 
+Ruta: postman\api_laravel.postman_collection.json 
 
+# Copia de la BD para hacer pruebas
+Ruta: dump\api.sql
 
 # Docker
 Como punto inicial se deberá 
