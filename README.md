@@ -82,7 +82,7 @@ Para facilidad, el back utiliza docker e incluye las variables de entorno para c
 
 Nota: la variable de entorno para laravel se encuentra en la ruta /config/larvel/.env.laravel, solo contiene la estructura base y algunos valores dummy, al ejecutar el proyecto con docker, este ejecutará el comando php artisan key:generate para generar la llave requerida por laravel. Solo restará que de forma manual se adicionen el resto de valores necesarios en el .env como lo son los datos de conexión a nuestra BD y demás secretos que se requieran.
 
-Para efectos de pruebas con el contenedor de mysql suministrado, puede utilizar en el .emv el DB_HOST=local_db, esto si no ha realizado ninguna modificación al container_name en el docker-compose
+Para efectos de pruebas con el contenedor de mysql suministrado, puede utilizar en el .emv el DB_HOST=local_db, esto si no ha realizado ninguna modificación al container_name en el docker-compose.
 
 # Comandos ejecutados
 
