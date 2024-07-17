@@ -78,7 +78,11 @@ Como punto inicial se deberá
 1. Construir la imagen de Docker con el comando: docker build .
 2. Ejecutar el docker compose: docker-compose up -d
 
-Para facilidad, el back utiliza docker e incluye las variables de entorno para comprender lo realizado
+Para facilidad, el back utiliza docker e incluye las variables de entorno para comprender lo realizado, en un ambiente o situación real las variables de entorno no deben estar versionadas con valores reales, estas solo pueden tener referenciadas los nombres de las variables utilizadas más no tener asociado valores por seguridad.
+
+Nota: la variable de entorno para laravel se encuentra en la ruta /config/larvel/.env.laravel, solo contiene la estructura base y algunos valores dummy, al ejecutar el proyecto con docker, este ejecutará el comando php artisan key:generate para generar la llave requerida por laravel. Solo restará que de forma manual se adicionen el resto de valores necesarios en el .env como lo son los datos de conexión a nuestra BD y demás secretos que se requieran.
+
+Para efectos de pruebas con el contenedor de mysql suministrado, puede utilizar en el .emv el DB_HOST=local_db, esto si no ha realizado ninguna modificación al container_name en el docker-compose
 
 # Comandos ejecutados
 

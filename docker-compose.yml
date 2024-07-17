@@ -34,15 +34,12 @@ services:
       - db
     links: 
           - db:db
-    volumes:
-      - $PATH_TO_REPO:/usr/share/nginx/html
     image: amazon_linux
     build: 
       dockerfile: Dockerfile
       args:
-        XDEBUG_VERSION: $XDEBUG_VERSION
-        DRUSH_VERSION: $DRUSH_VERSION
         PHP_VERSION: $PHP_VERSION
+        REPO: $REPO_GIT
     privileged: true
     ports:
       - "$PORT_HTTP_HOST:80"
@@ -52,11 +49,10 @@ services:
     dns: 
       - "8.8.8.8"
       - "1.1.1.1"
-    command: /usr/sbin/init && systemctl restart php-fpm.service && systemctl restart nginx.service && cd /usr/share/nginx/html 
+    command: /usr/sbin/init && systemctl restart php-fpm.service && systemctl restart nginx.service
     extra_hosts:
       - "host.docker.internal:host-gateway"
       # extra host for environment DEV local
-
     hostname: local
     domainname: local
     deploy:
